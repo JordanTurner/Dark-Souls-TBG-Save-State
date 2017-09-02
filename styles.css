@@ -1,0 +1,34 @@
+ #weaponForm label{
+	 font-size: 18px;
+	 display: inline-block;
+	 vertical-align: baseline;
+	 width:110px;
+ }
+
+ 
+  #weaponForm input{
+	 font-size: 18px;
+	 display: inline-block;
+	 vertical-align: baseline;
+	 
+ }
+ 
+   #weaponForm form{
+	 width:500px;
+	 
+ }
+ 
+#loginForm label, input {
+	font-size: 20px;	
+	display: inline-block;
+	vertical-align: baseline;
+	
+ }
+ 
+#loginForm label {
+	width:100px;
+}
+
+#loginForm form {
+	width: 500px;
+}
