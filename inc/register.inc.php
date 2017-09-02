@@ -3,6 +3,7 @@ include_once 'db_connect.php';
 include_once 'config.php';
  
 $error_msg = "";
+//$prep_stmt = '';
  
 if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     // Sanitize and validate the data passed in
@@ -27,15 +28,15 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     //
  
     $prep_stmt = "SELECT userid FROM users WHERE email = ? LIMIT 1";
-    $stmt = $mysqli->prepare($prep_stmt);
+    $stmt = $pdo->prepare($prep_stmt);
  
    // check existing email  
     if ($stmt) {
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $stmt->store_result();
+        $stmt->execute([$email]);
+        $row  = $stmt->fetch();
+       // $stmt->store_result();
  
-        if ($stmt->num_rows == 1) {
+        if ($row) {
             // A user with this email address already exists
             $error_msg .= '<p class="error">A user with this email address already exists.</p>';
                         $stmt->close();
@@ -47,14 +48,14 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
  
     // check existing username
     $prep_stmt = "SELECT userid FROM users WHERE username = ? LIMIT 1";
-    $stmt = $mysqli->prepare($prep_stmt);
+    $stmt = $pdo->prepare($prep_stmt);
  
     if ($stmt) {
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $stmt->store_result();
+        //$stmt->bind_param('s', $username);
+        $stmt->execute([$username]);
+        $row = $stmt->fetch();
  
-                if ($stmt->num_rows == 1) {
+                if ($row) {
                         // A user with this username already exists
                         $error_msg .= '<p class="error">A user with this username already exists</p>';
                         $stmt->close();
@@ -77,10 +78,10 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
         $password = password_hash($password, PASSWORD_BCRYPT);
  
         // Insert the new user into the database 
-        if ($insert_stmt = $mysqli->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)")) {
-            $insert_stmt->bind_param('sss', $username, $email, $password);
+        if ($insert_stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)")) {
+           // $insert_stmt->bind_param('sss', $username, $email, $password);
             // Execute the prepared query.
-            if (! $insert_stmt->execute()) {
+            if (!$insert_stmt->execute([$username, $email, $password])) {
                 header('Location: ../error.php?err=Registration failure: INSERT');
             }
         }
