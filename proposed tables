@@ -1,0 +1,12 @@
+Dark Souls the Board Game - Data base schema.
+
+GAME TABLE
+id
+number of players
+current encounter
+remaining encounters
+userid
+
+PLAYER TABLE
+
+
