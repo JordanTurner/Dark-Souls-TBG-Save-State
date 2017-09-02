@@ -3,7 +3,7 @@ include_once 'db_connect.php';
 include_once 'config.php';
  
 $error_msg = "";
-//$prep_stmt = '';
+
  
 if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     // Sanitize and validate the data passed in
@@ -34,8 +34,7 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     if ($stmt) {
         $stmt->execute([$email]);
         $row  = $stmt->fetch();
-       // $stmt->store_result();
- 
+      
         if ($row) {
             // A user with this email address already exists
             $error_msg .= '<p class="error">A user with this email address already exists.</p>';
@@ -51,7 +50,6 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     $stmt = $pdo->prepare($prep_stmt);
  
     if ($stmt) {
-        //$stmt->bind_param('s', $username);
         $stmt->execute([$username]);
         $row = $stmt->fetch();
  
@@ -79,8 +77,7 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
  
         // Insert the new user into the database 
         if ($insert_stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)")) {
-           // $insert_stmt->bind_param('sss', $username, $email, $password);
-            // Execute the prepared query.
+                     // Execute the prepared query.
             if (!$insert_stmt->execute([$username, $email, $password])) {
                 header('Location: ../error.php?err=Registration failure: INSERT');
             }
