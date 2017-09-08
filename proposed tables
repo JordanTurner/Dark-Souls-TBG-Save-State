@@ -3,10 +3,58 @@ Dark Souls the Board Game - Data base schema.
 GAME TABLE
 id
 number of players
-current encounter
 remaining encounters
 userid
 
 PLAYER TABLE
+id
+game_id
+player_name
+equip_id
+stats_id
+hero_class
 
 
+EQUIPMENT TABLE
+id
+game_id
+player_id
+name
+
+
+STATS TABLE
+id
+player_id
+strength
+dexterity
+intelligence
+faith
+health_blocks
+stamina_blocks
+estus
+ember
+heroic_action
+luck
+status_id
+
+
+STATUS TABLE
+id
+name
+
+REMAINING ENCOUNTERS TABLE
+id
+game_id
+level
+boss
+
+PLAYER_STATS TABLE
+id
+player_id
+sta_id
+
+
+PLAYER_EQUIP TABLE
+id
+player_id
+equip_id
