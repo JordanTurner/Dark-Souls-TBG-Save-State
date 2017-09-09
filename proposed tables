@@ -10,15 +10,12 @@ PLAYER TABLE
 id
 game_id
 player_name
-equip_id
 stats_id
 hero_class
 
 
 EQUIPMENT TABLE
 id
-game_id
-player_id
 name
 
 
@@ -48,13 +45,11 @@ game_id
 level
 boss
 
-PLAYER_STATS TABLE
-id
-player_id
-sta_id
-
-
 PLAYER_EQUIP TABLE
 id
 player_id
 equip_id
+
+TREASURE
+id
+game_id

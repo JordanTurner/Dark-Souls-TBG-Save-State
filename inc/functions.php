@@ -32,12 +32,7 @@ function sec_session_start() {
 function login($email, $password, $pdo) {
   
     if ($stmt = $pdo->prepare("SELECT userid, username, password FROM users WHERE email = ? LIMIT 1")) {
-       // $stmt->bind_param('s', $email);  // Bind "$email" to parameter.
         $stmt->execute([$email]);    // Execute the prepared query.
-       // $stmt->store_result();
- 
-        // get variables from result.
-       // $stmt->bind_result($user_id, $username, $db_password);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $count = $stmt->rowCount();
         $user_id = $result['userid'];
@@ -56,9 +51,6 @@ function login($email, $password, $pdo) {
                 // Send an email to user saying their account is locked
                 return false;
             } else { 
-
-               // echo '$password = '.$password.' and $db_password = '.$db_password;
-                   // return true;
               // Check if the password in the database matches
                 // the password the user submitted. We are using
                 // the password_verify function to avoid timing attacks.
@@ -78,22 +70,10 @@ function login($email, $password, $pdo) {
                 } else {
                     // Password is not correct
                     // We record this attempt in the database
-                    //$now = time();
-
                
                     $stmt = $pdo->prepare("INSERT INTO login_log (user_id, time) VALUES (?,NOW())");
-                    $stmt->execute([$user_id]);
-                /*    if ($password == ''){
-                        $password = 'blank';
-                    }
-
-                    $stmt = $pdo->prepare("INSERT INTO test (db_password) VALUES (?)");
-                    $stmt->execute([$password]);*/
-
-
+                    $stmt->execute([$user_id]);   
                     return false;
-
-                     //echo  $user_id .' YO'. $username .' '. $db_password;
                 }
             }
         } else {
