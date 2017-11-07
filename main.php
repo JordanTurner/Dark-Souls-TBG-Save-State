@@ -1,20 +1,34 @@
 <?php
 include_once 'inc/db_connect.php';
 include_once 'inc/functions.php';
-include_once 'inc/classes/Equip_Class.php';
+include_once 'inc/classes/Class_Game.php';
 sec_session_start();
 
-if(isset($_POST['equip'])){
-    $_SESSION['equip'] = $_POST['equip'];
+if(isset($_POST['name'])){
+    $_SESSION['name'] = $_POST['name'];
+    $_SESSION['playNum'] = $_POST['playNum'];
     header('Location:main.php');
     exit();
 }
 
-if(isset($_SESSION['equip'])){
+if(isset($_SESSION['name'])){
 
+    $name = $_SESSION['name'];
+    $playerNum = $_SESSION['playNum'];
+    $userid = $_SESSION['user_id'];
 
-    $equip = new Equipment();
+    //$newGameSql = "INSERT INTO game (id, num_of_players, userid, name) VALUES (NULL, '$name', '$userid, $name')";
+
+    $game = new Game($name, $playerNum, $userid);
+    echo "The game name is: ".$game->get_name();
+
+    unset($_SESSION['name']);
+    unset($_SESSION['playNum']);  
 }
+
+/*echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';*/
 ?>
 
 <!DOCTYPE html>
@@ -29,10 +43,17 @@ if(isset($_SESSION['equip'])){
 
         if (login_check($pdo) == true) : ?>
             <p>Welcome <?php echo htmlentities($_SESSION['username']); ?>!</p>
-            <p>Use the form below to add new equipment to the database</p>
+            <p>Use the form below to add a new game</p>
 
             <form name="addEquip" action="" method="POST">
-               <label for="equip"> Equipment Name</label><input type ="text" value="" id="equip" name="equip">
+               <label for ="name">Name</label><input type="text" name="name" id="name" value=""><br/>
+               <label for="playNum"> Number of players</label>
+               <select id = "playNum" name = "playNum">
+                   <option value="1">1</option>
+                   <option value="2">2</option>
+                   <option value="3">3</option>
+                   <option value="4">4</option>
+               </select><br/>
                <input type="submit">
             </form>
 

@@ -13,7 +13,7 @@ if (login_check($pdo) == true) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Monster Hunter</title>
+        <title>Darks Souls TBG Save State</title>
         <link rel="stylesheet" href="styles/main.css" />
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
@@ -25,9 +25,9 @@ if (login_check($pdo) == true) {
         }
         ?> 
         <form action="inc/process_login.php" method="post" name="login_form">                      
-            Email: <input type="text" name="email" />
-            Password: <input type="password" name="password" id="password"/>
-            <input type="button" value="Login" onclick="formhash(this.form, this.form.password);" /> 
+           <label for="email"> Email: </label><input type="text" name="email" id ="email"><br/><br/>
+            <label for="password"> Password: </label><input type="password" name="password" id="password">
+            <input type="submit" value="Login" onclick="formhash(this.form, this.form.password);" /> 
         </form>
  
 <?php
