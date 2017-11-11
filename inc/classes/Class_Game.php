@@ -5,14 +5,14 @@ class Game {
 	public $name;
 	public $playerNum;
 	public $userid;
+	public $pdo;
 
-	function __construct($name, $playerNum, $userid) {
+	function __construct($name, $playerNum, $userid, $pdo) {	
 
+		$this->pdo = $pdo;
 		$this->name = $name;
 		$this->playerNum = $playerNum;
 		$this->userid = $userid;
-
-
 	}
 
 		function set_name($name) {
@@ -25,7 +25,9 @@ class Game {
 
 		function set_userid($userid) {
 		 	 $this->name = $userid;
-		}					
+		}
+
+						
 
 
  
@@ -39,11 +41,15 @@ class Game {
 
 		function get_userid() {		
 		 	 return $this->userid;		
-		 }	
+		 }
 
 
 
-		 
+	//add new game to database
+	public function createGame() {
+		$stmt = $this->pdo->prepare("INSERT INTO game (name, user_id, num_of_players) VALUES (?, ?, ?)");
+        $stmt->execute([$this->name, $this->userid, $this->playerNum]); 
+	}
 }
 
 ?>

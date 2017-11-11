@@ -4,31 +4,6 @@ include_once 'inc/functions.php';
 include_once 'inc/classes/Class_Game.php';
 sec_session_start();
 
-if(isset($_POST['name'])){
-    $_SESSION['name'] = $_POST['name'];
-    $_SESSION['playNum'] = $_POST['playNum'];
-    header('Location:main.php');
-    exit();
-}
-
-if(isset($_SESSION['name'])){
-
-    $name = $_SESSION['name'];
-    $playerNum = $_SESSION['playNum'];
-    $userid = $_SESSION['user_id'];
-
-    $game = new Game($name, $playerNum, $userid, $pdo);
-    echo "The game name is: " . $game->get_name() . ' it has '. $game->get_playerNum() . '  players and the userid it is assigned to is '. $game->get_userid() .' <br/>';   
-    $game->createGame();
-    echo 'new game added';
-    header('Location: add_new_game.php');
-    unset($_SESSION['name']);
-    unset($_SESSION['playNum']); 
-    exit();
-
-
- 
-}
 
 ?>
 
@@ -36,7 +11,7 @@ if(isset($_SESSION['name'])){
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Main Page</title>
+        <title>Add Game Data</title>
         <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>
@@ -44,9 +19,9 @@ if(isset($_SESSION['name'])){
 
         if (login_check($pdo) == true) : ?>
             <p>Welcome <?php echo htmlentities($_SESSION['username']); ?>!</p>
-            <p>Use the form below to add a new game</p>
+            <p>Use the form below to add your new game data</p>
 
-            <form name="addNewGame" action="" method="POST">
+            <form name="addData" action="" method="POST">
                <label for ="name">Name</label><input type="text" name="name" id="name" value=""><br/>
                <label for="playNum"> Number of players</label>
                <select id = "playNum" name = "playNum">
