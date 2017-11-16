@@ -18,12 +18,13 @@ if(isset($_SESSION['name'])){
     $userid = $_SESSION['user_id'];
 
     $game = new Game($name, $playerNum, $userid, $pdo);
-    echo "The game name is: " . $game->get_name() . ' it has '. $game->get_playerNum() . '  players and the userid it is assigned to is '. $game->get_userid() .' <br/>';   
+    //echo "The game name is: " . $game->get_name() . ' it has '. $game->get_playerNum() . '  players and the userid it is assigned to is '. $game->get_userid() .' <br/>';   
     $game->createGame();
-    echo 'new game added';
-    header('Location: add_new_game.php');
+    echo $message;
+
     unset($_SESSION['name']);
     unset($_SESSION['playNum']); 
+    header('Location: add_new_game.php');   
     exit();
 
 

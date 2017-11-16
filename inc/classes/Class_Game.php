@@ -47,8 +47,28 @@ class Game {
 
 	//add new game to database
 	public function createGame() {
-		$stmt = $this->pdo->prepare("INSERT INTO game (name, user_id, num_of_players) VALUES (?, ?, ?)");
-        $stmt->execute([$this->name, $this->userid, $this->playerNum]); 
+
+		$stmt = $this->pdo->prepare("SELECT user_id, name FROM game WHERE user_id = ? AND name = ?");
+		$stmt->execute([$this->userid, $this->name]);
+		$gameExists = $stmt->fetchColumn();
+
+		if($gameExists)
+		{
+			$message = "A game with that name is already registered to your account. Please try again";
+			return $message;
+		}
+
+		else
+		{
+
+			$stmt = $this->pdo->prepare("INSERT INTO game (name, user_id, num_of_players) VALUES (?, ?, ?)");
+	        $stmt->execute([$this->name, $this->userid, $this->playerNum]); 
+	        $message = "New game added!";
+	        return $message;
+		}
+
+
+
 	}
 }
 

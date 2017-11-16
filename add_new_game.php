@@ -3,7 +3,8 @@ include_once 'inc/db_connect.php';
 include_once 'inc/functions.php';
 include_once 'inc/classes/Class_Game.php';
 sec_session_start();
-
+$name = $_SESSION['name'];
+echo $name;
 
 ?>
 
