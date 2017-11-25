@@ -19,13 +19,23 @@ if(isset($_SESSION['name'])){
 
     $game = new Game($name, $playerNum, $userid, $pdo);
     //echo "The game name is: " . $game->get_name() . ' it has '. $game->get_playerNum() . '  players and the userid it is assigned to is '. $game->get_userid() .' <br/>';   
-    $game->createGame();
-    echo $message;
+    if($game->createGame() == true)
+        {
+            echo $message;
 
-    unset($_SESSION['name']);
-    unset($_SESSION['playNum']); 
-    header('Location: add_new_game.php');   
-    exit();
+            unset($_SESSION['name']);
+            unset($_SESSION['playNum']); 
+            header('Location: add_new_game.php');
+            exit();
+        }
+    else
+        {
+            echo "A game with that name is already registered to your account. Please try again";
+            unset($_SESSION['name']);
+            unset($_SESSION['playNum']); 
+        }
+   
+
 
 
  

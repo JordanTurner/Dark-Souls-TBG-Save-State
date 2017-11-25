@@ -55,7 +55,7 @@ class Game {
 		if($gameExists)
 		{
 			$message = "A game with that name is already registered to your account. Please try again";
-			return $message;
+			return false;
 		}
 
 		else
@@ -64,7 +64,7 @@ class Game {
 			$stmt = $this->pdo->prepare("INSERT INTO game (name, user_id, num_of_players) VALUES (?, ?, ?)");
 	        $stmt->execute([$this->name, $this->userid, $this->playerNum]); 
 	        $message = "New game added!";
-	        return $message;
+	        return true;
 		}
 
 
