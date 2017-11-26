@@ -19,6 +19,7 @@ class Game {
 		$fetchid = $gameid_stmt->fetch();
 
 		$this->gameid = $fetchid['id'];
+
 	}
 
 		function set_name($name) {

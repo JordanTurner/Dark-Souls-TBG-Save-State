@@ -32,22 +32,28 @@ if (isset($_SESSION['name']))
 
 else
 	{
-		header('Location: main.php?error=1')
+		header('Location: main.php?error=1');
 	}
 
-    ?>        <p>Use the form below to add your new game data</p>
+    ?>        <p>Add the players for the game with the name: <strong><?php echo $name; ?></strong></p>
 
 
 
             <form name="addData" action="" method="POST">
-               <label for ="name">Name</label><input type="text" name="name" id="name" value=""><br/>
-               <label for="playNum"> Number of players</label>
-               <select id = "playNum" name = "playNum">
-                   <option value="1">1</option>
-                   <option value="2">2</option>
-                   <option value="3">3</option>
-                   <option value="4">4</option>
-               </select><br/>
+               <label for ="playerName">Player Name</label><input type="text" name="playerName" id="playerName" value=""><br/>
+
+               <label for="str"> Strength</label><input type="number" name="str" id="str" value=""><br/>
+               <label for="dex"> Dexterity</label><input type="number" name="dex" id="dex" value=""><br/>
+               <label for="int"> Intelligence</label><input type="number" name="int" id="int" value=""><br/>
+               <label for="fai"> Faith</label><input type="number" name="fai" id="fai" value=""><br/>
+               <label for="health"> Health</label><input type="number" name="health" id="health" value=""><br/>
+               <label for="stam"> Stamina</label><input type="number" name="stam" id="stam" value=""><br/>
+
+               <label for="estus"> Estus Available</label><input type="checkbox" name="estus" value="estus" id="estus"><br>
+               <label for="ember"> Ember Available</label><input type="checkbox" name="ember" value="ember" id="ember"><br>
+               <label for="heroic"> Heroic Action Available</label><input type="checkbox" name="heroic" value="heroic" id="heroic"><br>
+               <label for="luck"> Luck Coin Available</label><input type="checkbox" name="luck" value="luck" id="luck"><br>
+
                <input type="submit">
             </form>
 
