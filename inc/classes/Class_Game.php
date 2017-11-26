@@ -13,6 +13,12 @@ class Game {
 		$this->name = $name;
 		$this->playerNum = $playerNum;
 		$this->userid = $userid;
+
+		$gameid_stmt = $pdo->prepare("SELECT id FROM game WHERE user_id = ? AND name = ?");
+		$gameid_stmt->execute([$this->userid, $this->name]);
+		$fetchid = $gameid_stmt->fetch();
+
+		$this->gameid = $fetchid['id'];
 	}
 
 		function set_name($name) {
@@ -43,18 +49,23 @@ class Game {
 		 	 return $this->userid;		
 		 }
 
+		 function get_gameid()
+		 {
+		 	return $this->gameid;
+		 }
+
 
 
 	//add new game to database
 	public function createGame() {
 
-		$stmt = $this->pdo->prepare("SELECT user_id, name FROM game WHERE user_id = ? AND name = ?");
+		$stmt = $this->pdo->prepare("SELECT user_id, name, id FROM game WHERE user_id = ? AND name = ?");
 		$stmt->execute([$this->userid, $this->name]);
 		$gameExists = $stmt->fetchColumn();
 
 		if($gameExists)
 		{
-			$message = "A game with that name is already registered to your account. Please try again";
+			
 			return false;
 		}
 
@@ -63,7 +74,9 @@ class Game {
 
 			$stmt = $this->pdo->prepare("INSERT INTO game (name, user_id, num_of_players) VALUES (?, ?, ?)");
 	        $stmt->execute([$this->name, $this->userid, $this->playerNum]); 
-	        $message = "New game added!";
+	        //$fetch = $stmt->fetch();
+	        //$gameid = $fetch['id'];
+
 	        return true;
 		}
 

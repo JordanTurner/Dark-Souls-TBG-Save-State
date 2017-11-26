@@ -11,20 +11,23 @@ if(isset($_POST['name'])){
     exit();
 }
 
+if(isset($_GET['error']))
+{
+  echo "Ooops, something went wrong. Please try adding your game again!";  
+  unset($_SESSION['name']);
+  unset($_SESSION['playNum']); 
+}
+
 if(isset($_SESSION['name'])){
 
     $name = $_SESSION['name'];
     $playerNum = $_SESSION['playNum'];
     $userid = $_SESSION['user_id'];
 
-    $game = new Game($name, $playerNum, $userid, $pdo);
-    //echo "The game name is: " . $game->get_name() . ' it has '. $game->get_playerNum() . '  players and the userid it is assigned to is '. $game->get_userid() .' <br/>';   
+    $game = new Game($name, $playerNum, $userid, $pdo); 
     if($game->createGame() == true)
         {
-            echo $message;
-
-            unset($_SESSION['name']);
-            unset($_SESSION['playNum']); 
+            //$_SESSION['game'] = $game;
             header('Location: add_new_game.php');
             exit();
         }

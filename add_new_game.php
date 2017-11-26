@@ -3,9 +3,7 @@ include_once 'inc/db_connect.php';
 include_once 'inc/functions.php';
 include_once 'inc/classes/Class_Game.php';
 sec_session_start();
-$name = $_SESSION['name'];
-echo $name;
-
+echo "New Game Added!";
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +18,26 @@ echo $name;
 
         if (login_check($pdo) == true) : ?>
             <p>Welcome <?php echo htmlentities($_SESSION['username']); ?>!</p>
-            <p>Use the form below to add your new game data</p>
+
+<?php 
+if (isset($_SESSION['name']))
+	{
+    $name = $_SESSION['name'];
+    $playerNum = $_SESSION['playNum'];
+    $userid = $_SESSION['user_id'];
+
+    $game = new Game($name, $playerNum, $userid, $pdo);
+    echo 'the game\'s id is: ' .$game->get_gameid(); 
+	}
+
+else
+	{
+		header('Location: main.php?error=1')
+	}
+
+    ?>        <p>Use the form below to add your new game data</p>
+
+
 
             <form name="addData" action="" method="POST">
                <label for ="name">Name</label><input type="text" name="name" id="name" value=""><br/>
@@ -33,6 +50,10 @@ echo $name;
                </select><br/>
                <input type="submit">
             </form>
+
+
+
+
 
             <p>Return to <a href="logout.php">Signout</a></p>
         <?php else : ?>
